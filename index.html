@@ -13,17 +13,18 @@
         }
 
         body {
-            background: #1E1E2F;
-            color: #EAEAEA;
+            background: #121212;
+            color: #ECECEC;
             text-align: center;
         }
 
         .header {
-            background: #2B2D42;
+            background: #1F1F1F;
             padding: 20px;
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
-            color: #FFD700;
+            color: #00BCD4;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
 
         .container {
@@ -35,17 +36,18 @@
         }
 
         .tool-card {
-            background: #3A3D5B;
+            background: #1E1E2F;
             padding: 20px;
             border-radius: 10px;
             text-align: center;
             transition: 0.3s;
-            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
+            border: 1px solid #2C2C2C;
         }
 
         .tool-card:hover {
-            background: #FFD700;
-            color: #1E1E2F;
+            background: #00BCD4;
+            color: #121212;
         }
 
         .tool-card h2 {
@@ -56,16 +58,17 @@
             display: inline-block;
             margin-top: 10px;
             padding: 10px 20px;
-            background: #FFD700;
-            color: #1E1E2F;
+            background: #00BCD4;
+            color: #121212;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: 0.3s;
+            font-weight: bold;
+            transition: background 0.3s;
         }
 
         .btn:hover {
-            background: #E6C200;
+            background: #00ACC1;
         }
 
         @media (max-width: 768px) {
@@ -82,7 +85,7 @@
         <div class="tool-card">
             <h2>Image Converter</h2>
             <p>Convert images to different formats easily.</p>
-            <button class="btn" onclick="goToSection('image-converter')">Go to Tool</button>
+            <button class="btn" onclick="goToSection('image-converter.html')">Go to Tool</button>
         </div>
 
         <div class="tool-card">
@@ -136,5 +139,3 @@
     </script>
 </body>
 </html>
-
-  
