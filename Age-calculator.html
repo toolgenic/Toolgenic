@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #1E1E2F;
+            color: #EAEAEA;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .container {
+            background: #2B2D42;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            margin: auto;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #FFD700;
+        }
+
+        input, button {
+            padding: 10px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input {
+            width: 80%;
+            text-align: center;
+        }
+
+        button {
+            background: #FFD700;
+            color: #1E1E2F;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #E6C200;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Age Calculator</h2>
+        <label for="dob">Enter Your Date of Birth:</label><br>
+        <input type="datetime-local" id="dob"><br>
+        <button onclick="calculateAge()">Calculate Age</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateAge() {
+            let dobInput = document.getElementById("dob").value;
+            if (!dobInput) {
+                alert("Please enter your date of birth.");
+                return;
+            }
+            
+            let dob = new Date(dobInput);
+            let now = new Date();
+            let ageYears = now.getFullYear() - dob.getFullYear();
+            let ageMonths = now.getMonth() - dob.getMonth();
+            let ageDays = now.getDate() - dob.getDate();
+            let ageHours = now.getHours() - dob.getHours();
+            let ageMinutes = now.getMinutes() - dob.getMinutes();
+            
+            if (ageMinutes < 0) {
+                ageMinutes += 60;
+                ageHours--;
+            }
+            if (ageHours < 0) {
+                ageHours += 24;
+                ageDays--;
+            }
+            if (ageDays < 0) {
+                let previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                ageDays += previousMonth.getDate();
+                ageMonths--;
+            }
+            if (ageMonths < 0) {
+                ageMonths += 12;
+                ageYears--;
+            }
+            
+            let nextBirthday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
+            if (now > nextBirthday) {
+                nextBirthday.setFullYear(now.getFullYear() + 1);
+            }
+            let daysUntilNextBirthday = Math.ceil((nextBirthday - now) / (1000 * 60 * 60 * 24));
+            
+            document.getElementById("result").innerHTML = 
+                `You are <b>${ageYears}</b> years, <b>${ageMonths}</b> months, and <b>${ageDays}</b> days old.<br>
+                 Your next birthday is in <b>${daysUntilNextBirthday}</b> days.`;
+        }
+    </script>
+</body>
+</html>
+
+  
