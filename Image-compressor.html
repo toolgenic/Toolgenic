@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #1E1E2F;
+            color: #EAEAEA;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #2B2D42;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+
+        input, select, button {
+            margin: 10px 0;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background: #FFD700;
+            color: #1E1E2F;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #E6C200;
+        }
+
+        img {
+            margin-top: 10px;
+            max-width: 100%;
+            border-radius: 5px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Image Compressor</h2>
+        <input type="file" id="imageInput" accept="image/*">
+        <label for="quality">Select Quality:</label>
+        <select id="quality">
+            <option value="0.8">High</option>
+            <option value="0.5">Medium</option>
+            <option value="0.2">Low</option>
+        </select>
+        <button onclick="compressImage()">Compress</button>
+        <p id="status" class="hidden">Compressing image...</p>
+        <img id="preview" class="hidden">
+        <a id="download" class="hidden" download="compressed-image.jpg">
+            <button>Download</button>
+        </a>
+    </div>
+
+    <script>
+        function compressImage() {
+            const fileInput = document.getElementById('imageInput');
+            const quality = parseFloat(document.getElementById('quality').value);
+            const status = document.getElementById('status');
+            const preview = document.getElementById('preview');
+            const download = document.getElementById('download');
+
+            if (fileInput.files.length === 0) {
+                alert('Please upload an image first.');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    
+                    status.classList.remove('hidden');
+                    setTimeout(() => {
+                        const compressedDataUrl = canvas.toDataURL('image/jpeg', quality);
+                        preview.src = compressedDataUrl;
+                        preview.classList.remove('hidden');
+                        
+                        download.href = compressedDataUrl;
+                        download.classList.remove('hidden');
+                        status.classList.add('hidden');
+                    }, 1000);
+                };
+            };
+            
+            reader.readAsDataURL(file);
+        }
+    </script>
+</body>
+</html>
+
+  
