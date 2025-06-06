@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Crop Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+    <style>
+        body {
+            background-color: #1E1E2F;
+            color: #EAEAEA;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #2B2D42;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(255, 215, 0, 0.2);
+        }
+        .preview-container {
+            margin-top: 10px;
+        }
+        .crop-options {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px;
+            background: #FFD700;
+            color: #1E1E2F;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #E6C200;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Image Crop Tool</h2>
+        <input type="file" id="imageInput" accept="image/*">
+        <div class="preview-container">
+            <img id="imagePreview">
+        </div>
+        <div class="crop-options">
+            <button onclick="setAspectRatio(4/3)">4:3</button>
+            <button onclick="setAspectRatio(16/9)">16:9</button>
+            <button onclick="setAspectRatio(16/10)">16:10</button>
+            <button onclick="setAspectRatio(3/2)">3:2</button>
+            <button onclick="setAspectRatio(1/1)">1:1</button>
+            <button onclick="setAspectRatio(NaN)">Freeform</button>
+            <button onclick="cropImage()">Crop</button>
+        </div>
+        <canvas id="croppedCanvas" style="display: none;"></canvas>
+        <a id="downloadLink" style="display: none;" download="cropped-image.png">Download Cropped Image</a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <script>
+        let cropper;
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    if (cropper) {
+                        cropper.destroy();
+                    }
+                    cropper = new Cropper(document.getElementById('imagePreview'), {
+                        aspectRatio: 4 / 3,
+                        viewMode: 1
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function setAspectRatio(ratio) {
+            if (cropper) {
+                cropper.setAspectRatio(ratio);
+            }
+        }
+
+        function cropImage() {
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas();
+                if (canvas) {
+                    document.getElementById('croppedCanvas').replaceWith(canvas);
+                    canvas.id = 'croppedCanvas';
+                    document.getElementById('downloadLink').href = canvas.toDataURL();
+                    document.getElementById('downloadLink').style.display = 'block';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+
+  
