@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Trim Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input, button {
+            margin: 10px;
+            padding: 10px;
+            width: 80%;
+        }
+        #audioPlayer {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Audio Trim Tool</h2>
+        <input type="file" id="audioFile" accept="audio/*">
+        <br>
+        <label>Start Time (seconds):</label>
+        <input type="number" id="startTime" min="0" value="0">
+        <br>
+        <label>End Time (seconds):</label>
+        <input type="number" id="endTime" min="1">
+        <br>
+        <button onclick="trimAudio()">Trim</button>
+        <p id="status"></p>
+        <audio id="audioPlayer" controls></audio>
+        <br>
+        <a id="downloadLink" style="display:none;" download="trimmed_audio.mp3">Download Trimmed Audio</a>
+    </div>
+
+    <script>
+        let audioContext, sourceBuffer, audioBuffer;
+
+        document.getElementById('audioFile').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.readAsArrayBuffer(file);
+                reader.onload = function() {
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    audioContext.decodeAudioData(reader.result, function(buffer) {
+                        audioBuffer = buffer;
+                        document.getElementById('endTime').value = buffer.duration.toFixed(2);
+                    });
+                };
+            }
+        });
+
+        function trimAudio() {
+            if (!audioBuffer) {
+                alert("Please upload an audio file first.");
+                return;
+            }
+
+            const startTime = parseFloat(document.getElementById('startTime').value);
+            const endTime = parseFloat(document.getElementById('endTime').value);
+            if (startTime >= endTime || startTime < 0 || endTime > audioBuffer.duration) {
+                alert("Invalid time selection.");
+                return;
+            }
+
+            document.getElementById('status').innerText = "Processing...";
+            
+            const sampleRate = audioBuffer.sampleRate;
+            const startOffset = Math.floor(startTime * sampleRate);
+            const endOffset = Math.floor(endTime * sampleRate);
+            const newLength = endOffset - startOffset;
+            
+            const trimmedBuffer = audioContext.createBuffer(
+                audioBuffer.numberOfChannels,
+                newLength,
+                sampleRate
+            );
+
+            for (let i = 0; i < audioBuffer.numberOfChannels; i++) {
+                const oldChannelData = audioBuffer.getChannelData(i);
+                const newChannelData = trimmedBuffer.getChannelData(i);
+                newChannelData.set(oldChannelData.subarray(startOffset, endOffset));
+            }
+
+            exportTrimmedAudio(trimmedBuffer);
+        }
+
+        function exportTrimmedAudio(trimmedBuffer) {
+            const wavBuffer = audioBufferToWav(trimmedBuffer);
+            const blob = new Blob([wavBuffer], { type: 'audio/wav' });
+            const url = URL.createObjectURL(blob);
+            
+            document.getElementById('audioPlayer').src = url;
+            document.getElementById('downloadLink').href = url;
+            document.getElementById('downloadLink').style.display = 'block';
+            document.getElementById('status').innerText = "Trimmed audio ready.";
+        }
+
+        function audioBufferToWav(buffer) {
+            const numOfChan = buffer.numberOfChannels,
+                  length = buffer.length * numOfChan * 2 + 44,
+                  bufferArray = new ArrayBuffer(length),
+                  view = new DataView(bufferArray);
+            
+            const channels = [], sampleRate = buffer.sampleRate;
+            let offset = 0;
+
+            function writeString(view, offset, string) {
+                for (let i = 0; i < string.length; i++) {
+                    view.setUint8(offset + i, string.charCodeAt(i));
+                }
+            }
+
+            writeString(view, offset, 'RIFF'); offset += 4;
+            view.setUint32(offset, 36 + buffer.length * numOfChan * 2, true); offset += 4;
+            writeString(view, offset, 'WAVE'); offset += 4;
+            writeString(view, offset, 'fmt '); offset += 4;
+            view.setUint32(offset, 16, true); offset += 4;
+            view.setUint16(offset, 1, true); offset += 2;
+            view.setUint16(offset, numOfChan, true); offset += 2;
+            view.setUint32(offset, sampleRate, true); offset += 4;
+            view.setUint32(offset, sampleRate * numOfChan * 2, true); offset += 4;
+            view.setUint16(offset, numOfChan * 2, true); offset += 2;
+            view.setUint16(offset, 16, true); offset += 2;
+            writeString(view, offset, 'data'); offset += 4;
+            view.setUint32(offset, buffer.length * numOfChan * 2, true); offset += 4;
+            
+            for (let i = 0; i < numOfChan; i++) {
+                channels.push(buffer.getChannelData(i));
+            }
+
+            let interleaved = new Float32Array(buffer.length * numOfChan);
+            for (let i = 0; i < buffer.length; i++) {
+                for (let j = 0; j < numOfChan; j++) {
+                    interleaved[i * numOfChan + j] = channels[j][i];
+                }
+            }
+            
+            let index = 44;
+            for (let i = 0; i < interleaved.length; i++, index += 2) {
+                const sample = Math.max(-1, Math.min(1, interleaved[i]));
+                view.setInt16(index, sample < 0 ? sample * 0x8000 : sample * 0x7FFF, true);
+            }
+
+            return bufferArray;
+        }
+    </script>
+</body>
+</html>
+
+  
