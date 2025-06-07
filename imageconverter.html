@@ -94,6 +94,7 @@
                     
                     const convertedImage = canvas.toDataURL(`image/${format}`);
                     previewContainer.innerHTML = `<img src="${convertedImage}" style="max-width: 100%; border-radius: 5px; margin-top: 10px;">`;
+                    
                     const downloadBtn = document.createElement('a');
                     downloadBtn.href = convertedImage;
                     downloadBtn.download = `converted_image.${format}`;
@@ -105,6 +106,20 @@
                     downloadBtn.style.marginTop = '10px';
                     downloadBtn.style.textDecoration = 'none';
                     downloadBtn.style.borderRadius = '5px';
+
+                    // 👉 Add ad script when download is clicked
+                    downloadBtn.onclick = function () {
+                        const adDiv = document.createElement('div');
+                        adDiv.id = 'container-8323bdba2fff088b44bc66b1bb3139d2';
+                        document.body.appendChild(adDiv);
+
+                        const adScript = document.createElement('script');
+                        adScript.src = "//pl26855949.profitableratecpm.com/8323bdba2fff088b44bc66b1bb3139d2/invoke.js";
+                        adScript.async = true;
+                        adScript.setAttribute('data-cfasync', 'false');
+                        document.body.appendChild(adScript);
+                    };
+
                     previewContainer.appendChild(downloadBtn);
                     status.textContent = '';
                 };
@@ -114,5 +129,3 @@
     </script>
 </body>
 </html>
-
-  
