@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP Calculator</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.3/chart.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,6 +38,10 @@
         canvas {
             margin-top: 20px;
         }
+        .error {
+            color: #ff4444;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -54,6 +58,8 @@
         
         <button onclick="calculateSIP()">Calculate</button>
         
+        <p class="error" id="error">Please enter valid numbers for all fields.</p>
+        
         <h3>Results:</h3>
         <p>Total Investment: ₹<span id="totalInvestment">0</span></p>
         <p>Total Returns: ₹<span id="totalReturns">0</span></p>
@@ -64,24 +70,38 @@
 
     <script>
         function calculateSIP() {
-            let P = parseFloat(document.getElementById('investment').value);
-            let r = parseFloat(document.getElementById('rate').value) / 100 / 12;
-            let n = parseFloat(document.getElementById('tenure').value) * 12;
-            
-            let FV = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
-            let totalInvestment = P * n;
+            // Get input values
+            let investment = parseFloat(document.getElementById('investment').value);
+            let rate = parseFloat(document.getElementById('rate').value);
+            let tenure = parseFloat(document.getElementById('tenure').value);
+
+            // Validate inputs
+            let error = document.getElementById('error');
+            if (isNaN(investment) || isNaN(rate) || isNaN(tenure) || investment <= 0 || rate <= 0 || tenure <= 0) {
+                error.style.display = 'block';
+                return;
+            }
+            error.style.display = 'none';
+
+            // SIP calculation
+            let r = rate / 100 / 12; // Monthly rate
+            let n = tenure * 12; // Total months
+            let FV = investment * ((Math.pow(1 + r, n) - 1) / r) * (1 + r); // Future value
+            let totalInvestment = investment * n;
             let totalReturns = FV - totalInvestment;
 
+            // Display results
             document.getElementById('totalInvestment').innerText = totalInvestment.toFixed(2);
             document.getElementById('totalReturns').innerText = totalReturns.toFixed(2);
             document.getElementById('maturityValue').innerText = FV.toFixed(2);
 
+            // Draw chart
             drawChart(totalInvestment, totalReturns);
         }
 
         function drawChart(investment, returns) {
             let ctx = document.getElementById('sipChart').getContext('2d');
-            if (window.sipChart) window.sipChart.destroy();
+            if (window.sipChart) window.sipChart.destroy(); // Destroy previous chart
             window.sipChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -90,11 +110,13 @@
                         data: [investment, returns],
                         backgroundColor: ['#ff9800', '#4caf50']
                     }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
                 }
             });
         }
     </script>
 </body>
 </html>
-
-  
