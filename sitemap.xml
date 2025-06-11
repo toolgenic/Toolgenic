@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/</loc>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/imageconverter.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Image-compressor.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Image-crop.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Video-converter.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Age-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/EMI-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/SIP-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/audio-trim.html</loc>
+  </url>
+</urlset>
