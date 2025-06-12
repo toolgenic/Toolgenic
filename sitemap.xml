@@ -10,5 +10,14 @@
   <url>
     <loc>https://toolgenic.github.io/Toolgenic/Image-compressor.html</loc>
   </url>
-  <!-- Add other URLs here -->
+  <!-- Add other tool URLs below -->
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Age-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/EMI-calculator.html</loc>
+  </url>
+  <url>
+    <loc>https://toolgenic.github.io/Toolgenic/Image-crop.html</loc>
+  </url>
 </urlset>
