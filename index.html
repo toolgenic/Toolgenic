@@ -1,170 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="XkDmgsgMW58oCVTHrR8GyuUTmw1-IElxDHI69MUcsOo" />
-    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi Tool Hub</title>
+    <meta name="description" content="Multi Tool Hub - A collection of free, useful online tools including image converters, calculators, and audio tools">
+    <meta name="keywords" content="online tools, image converter, video converter, age calculator, EMI calculator, SIP calculator, audio trimmer">
+    <meta name="theme-color" content="#121212">
+    <link rel="canonical" href="https://yourdomain.com/" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <title>Multi Tool Hub - Free Online Tools Collection</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <style>
+        :root {
+            --primary: #00BCD4;
+            --primary-dark: #008394;
+            --background: #121212;
+            --card-bg: #1E1E2F;
+            --text: #ECECEC;
+            --header-bg: #1F1F1F;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
         }
 
         body {
-            background: #121212;
-            color: #ECECEC;
-            text-align: center;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
         }
 
         .header {
-            background: #1F1F1F;
-            padding: 20px;
-            font-size: 26px;
-            font-weight: bold;
-            color: #00BCD4;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            background: var(--header-bg);
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 1rem;
+        }
+
+        .search-container {
+            padding: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .search-bar {
-            margin: 20px auto;
-            text-align: center;
+            width: 100%;
+            position: relative;
         }
 
         .search-bar input {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
             border: none;
-            outline: none;
+            background: #2a2a2a;
+            color: var(--text);
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
-        .container {
+        .search-bar input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary);
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem 3rem;
+        }
+
+        .tools-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            max-width: 900px;
-            margin: 40px auto;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
         }
 
         .tool-card {
-            background: #1E1E2F;
-            padding: 20px;
-            border-radius: 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
             text-align: center;
-            transition: 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 188, 212, 0.2);
+            transition: all 0.3s ease;
             border: 1px solid #2C2C2C;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
 
         .tool-card:hover {
-            background: #00BCD4;
-            color: #121212;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 188, 212, 0.2);
+            border-color: var(--primary);
+        }
+
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
         }
 
         .tool-card h2 {
-            margin-bottom: 10px;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+            font-size: 1.4rem;
+        }
+
+        .tool-card p {
+            margin-bottom: 1.5rem;
+            color: #ccc;
+            flex-grow: 1;
         }
 
         .btn {
             display: inline-block;
-            margin-top: 10px;
             padding: 10px 20px;
-            background: #00BCD4;
+            background: var(--primary);
             color: #121212;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
             cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
         }
 
         .btn:hover {
-            background: #00ACC1;
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--header-bg);
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            color: #aaa;
+            display: none;
         }
 
         @media (max-width: 768px) {
-            .container {
+            .tools-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">Multi Tool Hub</div>
+    <header class="header">
+        <h1>Multi Tool Hub</h1>
+        <p>Free online tools for all your needs</p>
+    </header>
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search tools..." onkeyup="filterTools()">
-    </div>
-
-    <div class="container">
-        <div class="tool-card">
-            <h2>Image Converter</h2>
-            <p>Convert images to different formats easily.</p>
-            <a href="imageconverter.html" class="btn">Go to Tool</a>
-        </div>
-
-        <div class="tool-card">
-            <h2>Image Compressor</h2>
-            <p>Compress images without losing quality.</p>
-            <button class="btn" onclick="goToSection('Image-compressor.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>Image Crop</h2>
-            <p>Crop images to the desired size and dimensions.</p>
-            <button class="btn" onclick="goToSection('Image-crop.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>Video Converter</h2>
-            <p>Convert videos to different formats quickly.</p>
-            <button class="btn" onclick="goToSection('Video-converter.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>Age Calculator</h2>
-            <p>Find your exact age in years, months, and days.</p>
-            <button class="btn" onclick="goToSection('Age-calculator.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>EMI Calculator</h2>
-            <p>Calculate your loan EMIs quickly.</p>
-            <button class="btn" onclick="goToSection('EMI-calculator.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>SIP Calculator</h2>
-            <p>Calculate your SIP returns effortlessly.</p>
-            <button class="btn" onclick="goToSection('sip-calculator.html')">Go to Tool</button>
-        </div>
-
-        <div class="tool-card">
-            <h2>Audio Trim</h2>
-            <p>Trim audio files to your required length.</p>
-            <button class="btn" onclick="goToSection('audio-trim.html')">Go to Tool</button>
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search tools..." aria-label="Search tools" onkeyup="filterTools()">
         </div>
     </div>
+
+    <div class="main-container">
+        <div class="tools-grid">
+            <div class="tool-card">
+                <div class="tool-icon">🖼️</div>
+                <h2>Image Converter</h2>
+                <p>Convert images between different formats (JPG, PNG, WEBP, etc.) with ease.</p>
+                <a href="/tools/image-converter/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">📉</div>
+                <h2>Image Compressor</h2>
+                <p>Reduce image file size without noticeable quality loss.</p>
+                <a href="/tools/image-compressor/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">✂️</div>
+                <h2>Image Crop</h2>
+                <p>Crop images to your desired dimensions and aspect ratio.</p>
+                <a href="/tools/image-crop/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🎥</div>
+                <h2>Video Converter</h2>
+                <p>Convert video files between different formats (MP4, AVI, MOV, etc.).</p>
+                <a href="/tools/video-converter/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🎂</div>
+                <h2>Age Calculator</h2>
+                <p>Calculate your exact age in years, months, and days.</p>
+                <a href="/tools/age-calculator/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">💰</div>
+                <h2>EMI Calculator</h2>
+                <p>Calculate your loan Equated Monthly Installments with details.</p>
+                <a href="/tools/emi-calculator/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">📈</div>
+                <h2>SIP Calculator</h2>
+                <p>Calculate returns on your Systematic Investment Plans.</p>
+                <a href="/tools/sip-calculator/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="tool-card">
+                <div class="tool-icon">🎵</div>
+                <h2>Audio Trimmer</h2>
+                <p>Trim and edit audio files to your desired length.</p>
+                <a href="/tools/audio-trimmer/" class="btn">Open Tool</a>
+            </div>
+
+            <div class="no-results" id="noResults">
+                <h3>No tools found</h3>
+                <p>Try a different search term</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© <span id="current-year"></span> Multi Tool Hub. All tools are free to use with no ads.</p>
+        <p><a href="/sitemap.xml" style="color: var(--primary);">Sitemap</a></p>
+    </footer>
 
     <script>
-        function goToSection(sectionId) {
-            window.location.href = sectionId;
-        }
-
         function filterTools() {
             const input = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.tool-card');
+            const cards = document.querySelectorAll('.tool-card:not(#noResults)');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
 
             cards.forEach(card => {
                 const text = card.textContent.toLowerCase();
-                card.style.display = text.includes(input) ? 'block' : 'none';
+                if (text.includes(input)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
             });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         }
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Focus search input on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').focus();
+        });
     </script>
 </body>
 </html>
