@@ -7,7 +7,87 @@
     <meta name="keywords" content="calculator, converter, tools">
     <title>Multi Tool Hub</title>
     <style>
-        /* [Keep all your existing CSS styles] */
+    :root {
+        /* Primary Colors */
+        --primary-blue: #1a73e8;  /* Google blue */
+        --primary-dark: #0d5bba;
+        --primary-light: #e8f0fe;
+        
+        /* Background Colors */
+        --background: #ffffff;
+        --card-bg: #f8f9fa;
+        --header-bg: #ffffff;
+        
+        /* Text Colors */
+        --text-primary: #202124;
+        --text-secondary: #5f6368;
+        --text-light: #ffffff;
+        
+        /* Border/Divider Colors */
+        --border: #dadce0;
+        --divider: #e0e0e0;
+        
+        /* Shadow Colors */
+        --shadow-light: rgba(0, 0, 0, 0.08);
+        --shadow-medium: rgba(0, 0, 0, 0.12);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--text-primary);
+        font-family: 'Google Sans', Roboto, Arial, sans-serif;
+    }
+
+    .header {
+        background-color: var(--header-bg);
+        border-bottom: 1px solid var(--border);
+    }
+
+    .tool-card {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border);
+        box-shadow: 0 1px 2px var(--shadow-light);
+    }
+
+    .tool-card:hover {
+        box-shadow: 0 1px 6px var(--shadow-medium);
+        border-color: var(--primary-blue);
+    }
+
+    .tool-icon {
+        color: var(--primary-blue);
+    }
+
+    .tool-card h2 {
+        color: var(--primary-blue);
+    }
+
+    .tool-card p {
+        color: var(--text-secondary);
+    }
+
+    .btn {
+        background-color: var(--primary-blue);
+        color: var(--text-light);
+    }
+
+    .btn:hover {
+        background-color: var(--primary-dark);
+    }
+
+    .search-bar input {
+        border: 1px solid var(--border);
+        background-color: var(--background);
+    }
+
+    .search-bar input:focus {
+        border-color: var(--primary-blue);
+    }
+
+    .footer {
+        border-top: 1px solid var(--divider);
+        color: var(--text-secondary);
+    }
     </style>
 </head>
 <body>
@@ -16,62 +96,67 @@
         <p>Free online tools for all your needs</p>
     </header>
 
+    <div class="search-container">
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search tools..." aria-label="Search tools" onkeyup="filterTools()">
+        </div>
+    </div>
+
     <div class="main-container">
         <div class="tools-grid">
-            <!-- Updated with EXACT filenames from your repo -->
             <div class="tool-card">
                 <div class="tool-icon">🎂</div>
                 <h2>Age Calculator</h2>
-                <p>Calculate your exact age</p>
+                <p>Calculate your exact age in years, months, and days</p>
                 <a href="Age-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">💰</div>
                 <h2>EMI Calculator</h2>
-                <p>Calculate loan installments</p>
+                <p>Calculate your loan EMIs with details</p>
                 <a href="EMI-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📉</div>
                 <h2>Image Compressor</h2>
-                <p>Reduce image file size</p>
+                <p>Reduce image file size without quality loss</p>
                 <a href="Image-compressor.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">✂️</div>
                 <h2>Image Crop</h2>
-                <p>Crop images to desired dimensions</p>
+                <p>Crop images to your desired dimensions</p>
                 <a href="Image-crop.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎥</div>
                 <h2>Video Converter</h2>
-                <p>Convert video files</p>
+                <p>Convert video files between formats</p>
                 <a href="Video-converter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎵</div>
                 <h2>Audio Trimmer</h2>
-                <p>Trim audio files</p>
+                <p>Trim and edit audio files to length</p>
                 <a href="audio-trim.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🖼️</div>
                 <h2>Image Converter</h2>
-                <p>Convert image formats</p>
+                <p>Convert images between different formats</p>
                 <a href="imageconverter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📈</div>
                 <h2>SIP Calculator</h2>
-                <p>Calculate investment returns</p>
+                <p>Calculate returns on your investments</p>
                 <a href="sip-calculator.html" class="btn">Open Tool</a>
             </div>
 
@@ -83,7 +168,7 @@
     </div>
 
     <footer class="footer">
-        <p>© <span id="current-year"></span> Multi Tool Hub</p>
+        <p>© <span id="current-year"></span> Multi Tool Hub. All tools are free to use.</p>
         <p>
             <a href="sitemap.xml" style="color: var(--primary);">Sitemap</a> | 
             <a href="robots.txt" style="color: var(--primary);">Robots.txt</a>
@@ -91,7 +176,29 @@
     </footer>
 
     <script>
-        // [Keep your existing JavaScript]
+        function filterTools() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.tool-card:not(#noResults)');
+            const noResults = document.getElementById('noResults');
+            let visibleCount = 0;
+
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('searchInput').focus();
+        });
     </script>
 </body>
 </html>
