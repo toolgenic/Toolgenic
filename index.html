@@ -9,18 +9,18 @@
     <meta name="robots" content="index, follow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Canonical & Sitemap for GitHub Pages -->
+    <!-- Canonical & Sitemap -->
     <link rel="canonical" href="https://toolgenic.github.io/Multi-Tool-Hub/">
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://toolgenic.github.io/Multi-Tool-Hub/sitemap.xml">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
 
     <!-- Favicon & Manifest -->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="manifest" href="manifest.json">
 
-    <!-- Open Graph & Twitter Card -->
+    <!-- Open Graph & Twitter -->
     <meta property="og:title" content="Multi Tool Hub - Free Online Tools Collection">
     <meta property="og:description" content="Use our free image converter, video tools, calculators, and more in one place.">
-    <meta property="og:image" content="https://toolgenic.github.io/Multi-Tool-Hub/preview.png">
+    <meta property="og:image" content="preview.png">
     <meta property="og:url" content="https://toolgenic.github.io/Multi-Tool-Hub/">
     <meta name="twitter:card" content="summary_large_image">
 
@@ -178,6 +178,7 @@
             .tools-grid {
                 grid-template-columns: 1fr;
             }
+
             .header h1 {
                 font-size: 1.8rem;
             }
@@ -201,56 +202,56 @@
             <div class="tool-card">
                 <div class="tool-icon">🖼️</div>
                 <h2>Image Converter</h2>
-                <p>Convert images between different formats (JPG, PNG, WEBP, etc.) with ease.</p>
-                <a href="imagesconverter.html" class="btn">Open Tool</a>
+                <p>Convert images between formats like JPG, PNG, and WEBP.</p>
+                <a href="imageconverter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📉</div>
                 <h2>Image Compressor</h2>
-                <p>Reduce image file size without noticeable quality loss.</p>
-                <a href="image-compressor.html" class="btn">Open Tool</a>
+                <p>Reduce image size without losing quality.</p>
+                <a href="Image-compressor.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">✂️</div>
                 <h2>Image Crop</h2>
-                <p>Crop images to your desired dimensions and aspect ratio.</p>
-                <a href="image-crop.html" class="btn">Open Tool</a>
+                <p>Crop images to fit your needs quickly and easily.</p>
+                <a href="Image-crop.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎥</div>
                 <h2>Video Converter</h2>
-                <p>Convert video files between different formats (MP4, AVI, MOV, etc.).</p>
-                <a href="video-converter.html" class="btn">Open Tool</a>
+                <p>Convert video files to different formats.</p>
+                <a href="Video-converter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎂</div>
                 <h2>Age Calculator</h2>
-                <p>Calculate your exact age in years, months, and days.</p>
-                <a href="API-calculator.html" class="btn">Open Tool</a>
+                <p>Calculate your age in years, months, and days.</p>
+                <a href="Age-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">💰</div>
                 <h2>EMI Calculator</h2>
-                <p>Calculate your loan Equated Monthly Installments with details.</p>
-                <a href="EM-calculator.html" class="btn">Open Tool</a>
+                <p>Calculate your monthly loan EMIs with interest.</p>
+                <a href="EMI-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📈</div>
                 <h2>SIP Calculator</h2>
-                <p>Calculate returns on your Systematic Investment Plans.</p>
-                <a href="zip-calculator.html" class="btn">Open Tool</a>
+                <p>Estimate future value of your mutual fund investments.</p>
+                <a href="sip-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎵</div>
                 <h2>Audio Trimmer</h2>
-                <p>Trim and edit audio files to your desired length.</p>
+                <p>Trim your audio clips to remove unwanted parts.</p>
                 <a href="audio-trim.html" class="btn">Open Tool</a>
             </div>
 
@@ -262,8 +263,8 @@
     </div>
 
     <footer class="footer">
-        <p>© <span id="current-year"></span> Multi Tool Hub. All tools are free to use with no ads.</p>
-        <p><a href="stemup.xml" style="color: var(--primary);">Sitemap</a></p>
+        <p>© <span id="current-year"></span> Multi Tool Hub. All tools are free to use.</p>
+        <p><a href="sitemap.xml" style="color: var(--primary);">View Sitemap</a></p>
     </footer>
 
     <script>
@@ -287,9 +288,6 @@
         }
 
         document.getElementById('current-year').textContent = new Date().getFullYear();
-        window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('searchInput').focus();
-        });
     </script>
 </body>
 </html>
