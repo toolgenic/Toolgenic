@@ -3,13 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Multi Tool Hub - A collection of free, useful online tools including image converters, calculators, and audio tools">
+    <meta name="description" content="Multi Tool Hub - A collection of free, useful online tools including image converters, calculators, and audio tools.">
     <meta name="keywords" content="online tools, image converter, video converter, age calculator, EMI calculator, SIP calculator, audio trimmer">
     <meta name="theme-color" content="#121212">
-    <link rel="canonical" href="https://yourdomain.com/" />
-    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <meta name="robots" content="index, follow">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Canonical & Sitemap for GitHub Pages -->
+    <link rel="canonical" href="https://toolgenic.github.io/Multi-Tool-Hub/">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://toolgenic.github.io/Multi-Tool-Hub/sitemap.xml">
+
+    <!-- Favicon & Manifest -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Open Graph & Twitter Card -->
+    <meta property="og:title" content="Multi Tool Hub - Free Online Tools Collection">
+    <meta property="og:description" content="Use our free image converter, video tools, calculators, and more in one place.">
+    <meta property="og:image" content="https://toolgenic.github.io/Multi-Tool-Hub/preview.png">
+    <meta property="og:url" content="https://toolgenic.github.io/Multi-Tool-Hub/">
+    <meta name="twitter:card" content="summary_large_image">
+
     <title>Multi Tool Hub - Free Online Tools Collection</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     <style>
         :root {
             --primary: #00BCD4;
@@ -55,11 +71,6 @@
             padding: 1.5rem;
             max-width: 800px;
             margin: 0 auto;
-        }
-
-        .search-bar {
-            width: 100%;
-            position: relative;
         }
 
         .search-bar input {
@@ -167,7 +178,6 @@
             .tools-grid {
                 grid-template-columns: 1fr;
             }
-            
             .header h1 {
                 font-size: 1.8rem;
             }
@@ -192,14 +202,14 @@
                 <div class="tool-icon">🖼️</div>
                 <h2>Image Converter</h2>
                 <p>Convert images between different formats (JPG, PNG, WEBP, etc.) with ease.</p>
-                <a href="imagesconverter.html" class="btn">Open Tool</a>
+                <a href="image-converter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📉</div>
                 <h2>Image Compressor</h2>
                 <p>Reduce image file size without noticeable quality loss.</p>
-                <a href="Image-compressor.html" class="btn">Open Tool</a>
+                <a href="image-compressor.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
@@ -213,28 +223,28 @@
                 <div class="tool-icon">🎥</div>
                 <h2>Video Converter</h2>
                 <p>Convert video files between different formats (MP4, AVI, MOV, etc.).</p>
-                <a href="Video-converter.html" class="btn">Open Tool</a>
+                <a href="video-converter.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">🎂</div>
                 <h2>Age Calculator</h2>
                 <p>Calculate your exact age in years, months, and days.</p>
-                <a href="Age-calculator.html" class="btn">Open Tool</a>
+                <a href="age-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">💰</div>
                 <h2>EMI Calculator</h2>
                 <p>Calculate your loan Equated Monthly Installments with details.</p>
-                <a href="EM-calculator.html" class="btn">Open Tool</a>
+                <a href="emi-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
                 <div class="tool-icon">📈</div>
                 <h2>SIP Calculator</h2>
                 <p>Calculate returns on your Systematic Investment Plans.</p>
-                <a href="zip-calculator.html" class="btn">Open Tool</a>
+                <a href="sip-calculator.html" class="btn">Open Tool</a>
             </div>
 
             <div class="tool-card">
@@ -253,7 +263,7 @@
 
     <footer class="footer">
         <p>© <span id="current-year"></span> Multi Tool Hub. All tools are free to use with no ads.</p>
-        <p><a href="/sitemap.xml" style="color: var(--primary);">Sitemap</a></p>
+        <p><a href="https://toolgenic.github.io/Multi-Tool-Hub/sitemap.xml" style="color: var(--primary);">Sitemap</a></p>
     </footer>
 
     <script>
@@ -276,10 +286,7 @@
             noResults.style.display = visibleCount === 0 ? 'block' : 'none';
         }
 
-        // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Focus search input on page load
         window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('searchInput').focus();
         });
