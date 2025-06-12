@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://toolgenic.github.io/Toolgenic/sitemap.xml
+sitemap: https://toolgenic.github.io/Toolgenic/sitemap.xml
